@@ -1,4 +1,4 @@
-nstallation
+Installation
 ============
 
 	git clone https://github.com/ianwitherow/dotvim.git ~/.vim
