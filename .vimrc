@@ -25,7 +25,7 @@ source $VIMRUNTIME/vimrc_example.vim
 "set guioptions-=m
 "set guioptions-=T
 
-au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
+"au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
 
 "turn off stupid bell sounds
 set noerrorbells
@@ -47,10 +47,6 @@ set ignorecase "ignore case when searching
 set smartcase "override ignorecase when pattern contains a capital letter
 set noshowmatch
 
-"Start in full screen
-au GUIEnter * simalt ~x
-map <leader>F :simalt ~x<CR>
-
 "have 0 go to first nonblank character
 map 0 ^
 
@@ -59,14 +55,18 @@ set guifont=Consolas:h10
 color codeschool
 
 "Persist undo
-
-let undo_dir = $TEMP."\\vimundo"
-if !isdirectory(undo_dir)
-	silent execute "!mkdir ".undo_dir
-endif
-set undodir=$TEMP\vimundo "not sure how to use the variable I made here
 set undofile
-set undolevels=5000
+set undodir=~/.vim/undo
+set undolevels=10000
+
+
+"let undo_dir = 
+"if !isdirectory(undo_dir)
+	"silent execute "!mkdir ".undo_dir
+"endif
+"set undodir=$TEMP\vimundo "not sure how to use the variable I made here
+"set undofile
+"set undolevels=5000
 
 runtime macros/matchit.vim
 autocmd BufNewFile,BufRead *.vb set ft=vbnet
@@ -193,7 +193,7 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 "au Filetype html,xml,xsl source ~/.vim/vim73/scripts/closetag.vim
 
 "For some reason I have to manually load the css color script
-au Filetype html,css source ~\.vim\vim73\after\syntax\css.vim
+"au Filetype html,css source ~/.vim/after/syntax/css.vim
 
 "Ctrl-P stuff
 nnoremap <silent> <c-b> :CtrlPBuffer<CR>
