@@ -19,7 +19,7 @@ call pathogen#incubate()
 call pathogen#helptags()
 
 set nocompatible
-"source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/vimrc_example.vim
 
 "Hide GUI things
 "set guioptions-=m
