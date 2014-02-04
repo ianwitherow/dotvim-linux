@@ -351,7 +351,7 @@ function! AutoPairsReturn()
       " Use \<BS> instead of \<ESC>cl will cause the placeholder deleted
       " incorrect. because <C-O>zz won't leave Normal mode.
       " Use \<DEL> is a bit wierd. the character before cursor need to be deleted.
-      let cmd = " \<C-O>zz\<ESC>cl"
+      let cmd = " \<C-O>zz"
     end
 
     " If equalprg has been set, then avoid call =
