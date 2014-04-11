@@ -12,14 +12,18 @@ if &term =~ "xterm"
 	endif
 endif
 
+set runtimepath=/usr/local/share/vim/vim74,~/.vim
+
 
 " Use pathogen to load plugins from bundle directory
 filetype off
 call pathogen#incubate()
 call pathogen#helptags()
+filetype plugin indent on
+
+syntax on
 
 set nocompatible
-source $VIMRUNTIME/vimrc_example.vim
 
 "Hide GUI things
 "set guioptions-=m
@@ -67,6 +71,9 @@ set undolevels=10000
 "set undodir=$TEMP\vimundo "not sure how to use the variable I made here
 "set undofile
 "set undolevels=5000
+
+let g:ctrlp_custom_ignore = 'node_modules\'
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 runtime macros/matchit.vim
 autocmd BufNewFile,BufRead *.vb set ft=vbnet
