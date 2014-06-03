@@ -1,7 +1,7 @@
 Installation
 ============
 
-	git clone https://github.com/ianwitherow/dotvim.git ~/.vim
+	git clone https://github.com/ianwitherow/dotvim-linux.git ~/.vim
 
 
 Create symlink
