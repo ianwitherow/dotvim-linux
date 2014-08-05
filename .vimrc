@@ -12,7 +12,6 @@ if &term =~ "xterm"
 	endif
 endif
 
-set runtimepath=/usr/local/share/vim/vim74,~/.vim
 
 
 " Use pathogen to load plugins from bundle directory
@@ -310,3 +309,4 @@ function! Sql()
 	:execute "normal! gg"
 	normal! "*yG
 endfunction
+
