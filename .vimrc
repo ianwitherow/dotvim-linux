@@ -1,3 +1,67 @@
+set number                         " Line numbers
+set linebreak                      " Break line without break word
+set nobackup                       " Dont save backup~ files
+set ignorecase                     " Ignore case when searching
+set smartcase                      " Override ignorecase when pattern contains a capital letter
+set incsearch                      " Find results as you type
+set ai                             " Autoindent
+set backspace=indent,eol,start     " Visual studio backspace thing for the extensiont
+set shiftwidth=3 tabstop=3         " Uses less real estate than 4
+set noexpandtab                    " Don't use spaces
+set guioptions-=m                  " Remove menu
+set guioptions-=T                  " Remove toolbar
+set guioptions-=r                  " Remove scroll bar
+set directory=~/.vim/swp           " Put .swp files here
+set nrformats=                     " Treat all numbers as decimal
+set lazyredraw                     " When running macros, wait until it's done and then update the screen. way fasterw
+set noshowmatch
+set hidden                         " Allow switching buffers even if it's not saved yet
+set rnu									  " relative line numbers
+set guifont=consolas:h10
+
+"Syntax highlighting
+syntax on
+
+colorscheme codeschool
+
+
+"Vundle stuff
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'arecarn/crunch.git'
+Plugin 'kien/ctrlp.vim.git'
+Plugin 'chrisbra/csv.vim.git'
+Plugin 'Raimondi/delimitMate.git'
+Plugin 'docunext/closetag.vim.git'
+Plugin 'atweiden/vim-betterdigraphs.git'
+Plugin 'scrooloose/nerdcommenter.git'
+Plugin 'mjbrownie/swapit.git'
+Plugin 'bling/vim-airline.git'
+Plugin 'tpope/vim-repeat.git'
+Plugin 'tpope/vim-surround.git'
+Plugin 'jiangmiao/auto-pairs.git'
+Plugin 'bkad/CamelCaseMotion.git' "use ,<motion> to move in camelcase
+Plugin 'tmhedberg/matchit.git'
+Plugin 'scrooloose/nerdtree.git' "File browsing
+Plugin 'ervandew/supertab.git' "tab completion in insert mode
+Plugin 'atweiden/vim-vmath.git' "Lets you do ++ to math some numbers
+Plugin 'mattn/emmet-vim.git' "New zen-coding
+Plugin 'godlygeek/tabular.git'
+Bundle 'tpope/vim-markdown'
+"Bundle 'pangloss/vim-javascript'
+Bundle 'hail2u/vim-css3-syntax'
+Bundle 'tpope/vim-fugitive'
+Bundle 'gregsexton/MatchTag'
+Plugin 'kana/vim-textobj-user'
+Plugin 'tpope/vim-speeddating'
+Plugin 'dhruvasagar/vim-table-mode.git'
+Plugin 'taku-o/vim-toggle'
+Plugin 'mattn/flappyvird-vim'
+call vundle#end()
+filetype plugin indent on
+
+
 if &term =~ "xterm"
 	"256 color --
 	let &t_Co=256
@@ -14,21 +78,29 @@ endif
 
 
 
-" Use pathogen to load plugins from bundle directory
-filetype off
-call pathogen#incubate()
-call pathogen#helptags()
-filetype plugin indent on
+"" Use pathogen to load plugins from bundle directory
+"filetype off
+"call pathogen#incubate()
+"call pathogen#helptags()
+"filetype plugin indent on
 
-syntax on
+"ASP.NET files that should act like HTML
+au BufNewFile,BufRead *.aspx,*.ascx,*.master set filetype=html
 
-set nocompatible
+"Start in full screen
+au GUIEnter * simalt ~x
 
-"Hide GUI things
-"set guioptions-=m
-"set guioptions-=T
+"For some reason I have to manually load the css color script
+au Filetype html,css source ~\.vim\after\syntax\css.vim
 
-"au BufNewFile,BufRead *.aspx,*.ascx set filetype=html
+"Allows % to move between braces in inline css
+au filetype html let b:match_debug=1
+
+"Fixes brace matching in script tags inside HTML files
+"let b:match_debug=1
+
+"Load .vimrc after saving it
+au! BufWritePost .vimrc source $MYVIMRC
 
 "turn off stupid bell sounds
 set noerrorbells
@@ -36,101 +108,62 @@ set novisualbell
 set t_vb=
 set tm=500
 
+
 let mapleader=','
 
-set ai "autoindent
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
+"_____________________________________________________
+"----------------------Mappings-----------------------
+"_____________________________________________________
 
-set nu "Show line numbers
+"jj and jk exit insert mode
+imap jj <esc>
+imap jk <esc>
 
-set incsearch "find results as you type
-set ignorecase "ignore case when searching
-set smartcase "override ignorecase when pattern contains a capital letter
-set noshowmatch
+"Have 0 go to first nonblank character
+nmap 0 ^
 
-"have 0 go to first nonblank character
-map 0 ^
-
-set guifont=Consolas:h10
-
-color codeschool
-
-"Persist undo
-set undofile
-set undodir=~/.vim/undo
-set undolevels=10000
-
-
-"let undo_dir = 
-"if !isdirectory(undo_dir)
-	"silent execute "!mkdir ".undo_dir
-"endif
-"set undodir=$TEMP\vimundo "not sure how to use the variable I made here
-"set undofile
-"set undolevels=5000
-
-let g:ctrlp_custom_ignore = 'node_modules\'
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-runtime macros/matchit.vim
-autocmd BufNewFile,BufRead *.vb set ft=vbnet
-
-"Allows % to move between braces in inline css
-autocmd filetype html let b:match_debug=1
-
-"Treat all numbers as decimal
-set nrformats=
-
+"Space centers the screen
 nmap <space> zz
-
-"Workaround because S doesn't work with indentation in visual studio
-"nmap S ddO
 
 "Double ESC turns off seach highlighting
 nmap <silent> <ESC><ESC> :noh<CR>
+
+"Ctrl-L unhighlights as well as redraws the screen
 nnoremap <silent> <c-l> :noh<cr><c-l>
 
 "New lines while staying in normal mode
 nmap <Enter> o<Esc>
 nmap <S-Enter> O<Esc>
 
-" tab navigation like firefox
-nnoremap <C-S-tab> :tabprevious<CR>
-nnoremap <C-tab>   :tabnext<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
+"Set j and k to go down a line even on a wrapped line
+nmap j gj
+nmap k gk
 
-map <leader>te :tabedit 
-map <leader>tm :tabmove 
-map <leader>tl :tablast<CR>
-map <leader>tf :tabfirst<CR>
-map <leader>tn :tabnew<CR>
+"Make empty lines ACTUALLY empty (removes lines with just whitespace)
+nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
 
-"Buffer navigation
-nnoremap <silent> [b :bprevious<CR>
-nnoremap <silent> ]b :bnext<CR>
-nnoremap <silent> [B :bfirst<CR>
-nnoremap <silent> ]B :blast<CR>
-nnoremap <leader>b :buffer 
+"Delete empty lines
+nmap <leader>dbl :g/^$/d<cr>``
+
+"Vimath plugin - does some math stuff on lists of numbers
+vmap ++ y:call VMATH_Analyse()<cr>
+nmap ++ vip++
+
+"Open a new tab
+nmap <leader>tn :tabnew<CR>
 
 "Easy VIMRC editing
-map <leader>rc :tabedit $MYVIMRC<CR>
+map <leader>rc :edit $MYVIMRC<CR>
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<CR>
 
-"opening definitions
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+"Open current file location in windows explorer
+map <leader>ex :silent ! "explorer /select, %<cr>"
 
 "Get rid of those annoying underlines in HTML
 let html_no_rendering=1
 
-"Set j and k to go down a line even on a wrapped line
-nmap j gj
-nmap k gk
 
 "Y yanks from cursor to end of line
 nnoremap Y y$
@@ -150,9 +183,6 @@ nnoremap <leader>l       "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+
 " isolate a line
 nnoremap <leader><space><space> O<c-o>j<c-o>o<c-o>k<esc>
 
-"Bracket out a line
-nnoremap <leader>{ O{<esc>jo}<esc>
-
 "copy/paste to os clipboard
 vnoremap <Leader>y "*y
 nnoremap <Leader>y "*y
@@ -166,6 +196,7 @@ nnoremap <Leader>D "*D
 
 "Paste in visual mode without overwriting the buffer
 vnoremap p "_dp
+vnoremap P "_dP
 
 "Quick file type changing
 nnoremap <leader>ftj :set ft=javascript<CR>
@@ -181,7 +212,7 @@ vnoremap <leader>br mt:s/<[^>]*>/\r&\r/g<CR>`tdd=atvat:g/^$/d<CR>:noh<CR>}ddkvat
 nnoremap <Leader>fj :%!python -m json.tool<CR>
 nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^$/d<CR>gg=G
 
-"Split up HTML tag and put cursor inside
+"Split up HTML tag and put cursor inside (Used when cursor is like this: <div>|</div>)
 imap <S-Enter> <Enter><Esc>O
 
 "HTML attribute text object
@@ -189,63 +220,51 @@ omap aha :normal vaha<CR>
 vnoremap aha :<C-U>silent! normal! vf";<CR>
 
 
-"turn off ~ file backup
-set nobackup
+"Copy the entire lines when grabbing html tags
+nnoremap yat yVat``
 
-autocmd! BufWritePost .vimrc source $MYVIMRC
+"Persist undo
+let undo_dir = $TEMP."\\vimundo"
+if !isdirectory(undo_dir)
+	silent execute "!mkdir ".undo_dir
+endif
+set undodir=$TEMP\vimundo "not sure how to use the variable I made here
+set undofile
+set undolevels=5000
 
-"Fix closetag
-"let g:closetag_html_style=1
-"au Filetype html,xml,xsl source ~/.vim/vim73/scripts/closetag.vim
 
-"For some reason I have to manually load the css color script
-"au Filetype html,css source ~/.vim/after/syntax/css.vim
+runtime macros/matchit.vim
+
 
 "Ctrl-P stuff
+"Ctrl+B opens CtrlP Buffer
 nnoremap <silent> <c-b> :CtrlPBuffer<CR>
 let g:ctrlp_working_path_mode = 'c'
 
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|swo|swp)$'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|\v[\/]\.(git|hg|svn|swo|swp)$'
 
 "Gets a bunch of lines ready to be inserted into a table in sql
 nnoremap  <leader>sql :call Sql()<cr>
+
+"Generates VB public properties from private ones
+let @v = 'mmyyGpcePublic Propertyjkf_xAGet€ýc€ýbEnd Getjk>>O	Return _jk?properwye/_pjoSetEnd Setjk>>O	_" = valuejkkA(value asjk?properwwwy$/as)ea "jkjjo€kbEnd Propertyjk`mj'
 
 "Macro for splitting up sql inserts when you have over 1,000 records. Used in
 "the Sql() function
 let @s = '0xOinsert into ##SomeTable valuesjj1001j0'
 
-"Make empty lines ACTUALLY empty (no whitespace)
-nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
-"Delete empty lines
-nmap <leader>dbl :g/^$/d<cr>``
-
-"Fixes brace matching in script tags inside HTML files
-let b:match_debug=1
 
 "For vim-airline
+let g:airline#extensions#tabline#show_buffers=1
 set laststatus=2
-imap jj <esc>
-imap jk <esc>
 
 "BetterDigraphs
 inoremap <expr>  <C-K>   BDG_GetDigraph()
 
-"Vimath
-vmap ++ y:call VMATH_Analyse()<cr>
-nmap ++ vip++
-
-ino <C-A> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
-
-nnoremap yat yVat``
-
 "NerdTree stuff
 map <F2> :NERDTreeToggle<CR>
-map <Leader>nt :NERDTree c:/users/ian.witherow/copy/projects/webdev<CR>
-
-"Undotree
-nnoremap <F5> :UndotreeToggle<cr>
 
 function! Sql()
 	call inputsave()
@@ -309,4 +328,3 @@ function! Sql()
 	:execute "normal! gg"
 	normal! "*yG
 endfunction
-
