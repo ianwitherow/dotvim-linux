@@ -29,25 +29,25 @@ colorscheme codeschool
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'arecarn/crunch.git'
-Plugin 'kien/ctrlp.vim.git'
-Plugin 'chrisbra/csv.vim.git'
-Plugin 'Raimondi/delimitMate.git'
-Plugin 'docunext/closetag.vim.git'
-Plugin 'atweiden/vim-betterdigraphs.git'
-Plugin 'scrooloose/nerdcommenter.git'
-Plugin 'mjbrownie/swapit.git'
-Plugin 'bling/vim-airline.git'
-Plugin 'tpope/vim-repeat.git'
-Plugin 'tpope/vim-surround.git'
-Plugin 'jiangmiao/auto-pairs.git'
-Plugin 'bkad/CamelCaseMotion.git' "use ,<motion> to move in camelcase
-Plugin 'tmhedberg/matchit.git'
-Plugin 'scrooloose/nerdtree.git' "File browsing
-Plugin 'ervandew/supertab.git' "tab completion in insert mode
-Plugin 'atweiden/vim-vmath.git' "Lets you do ++ to math some numbers
-Plugin 'mattn/emmet-vim.git' "New zen-coding
-Plugin 'godlygeek/tabular.git'
+Plugin 'arecarn/crunch'
+Plugin 'kien/ctrlp.vim'
+Plugin 'chrisbra/csv.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'docunext/closetag.vim'
+Plugin 'atweiden/vim-betterdigraphs'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'mjbrownie/swapit'
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'bkad/CamelCaseMotion' "use ,<motion> to move in camelcase
+Plugin 'tmhedberg/matchit'
+Plugin 'scrooloose/nerdtree' "File browsing
+Plugin 'ervandew/supertab' "tab completion in insert mode
+Plugin 'atweiden/vim-vmath' "Lets you do ++ to math some numbers
+Plugin 'mattn/emmet-vim' "New zen-coding
+Plugin 'godlygeek/tabular'
 Bundle 'tpope/vim-markdown'
 "Bundle 'pangloss/vim-javascript'
 Bundle 'hail2u/vim-css3-syntax'
@@ -55,9 +55,11 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/MatchTag'
 Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-speeddating'
-Plugin 'dhruvasagar/vim-table-mode.git'
+Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'taku-o/vim-toggle'
-Plugin 'mattn/flappyvird-vim'
+Plugin 'krisajenkins/dbext.vim'
+Plugin 'krisajenkins/vim-pipe'
+Plugin 'vim-scripts/SQLComplete.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -184,15 +186,15 @@ nnoremap <leader>l       "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+
 nnoremap <leader><space><space> O<c-o>j<c-o>o<c-o>k<esc>
 
 "copy/paste to os clipboard
-vnoremap <Leader>y "*y
-nnoremap <Leader>y "*y
-nnoremap <Leader>p "*p
-vnoremap <Leader>p "*p
-nnoremap <Leader>P "*P
-vnoremap <Leader>P "*P
-nnoremap <Leader>d "*d
-vnoremap <Leader>d "*d
-nnoremap <Leader>D "*D
+vnoremap <Leader>y "+y
+nnoremap <Leader>y "+y
+nnoremap <Leader>p "+p
+vnoremap <Leader>p "+p
+nnoremap <Leader>P "+P
+vnoremap <Leader>P "+P
+nnoremap <Leader>d "+d
+vnoremap <Leader>d "+d
+nnoremap <Leader>D "+D
 
 "Paste in visual mode without overwriting the buffer
 vnoremap p "_dp
@@ -224,11 +226,7 @@ vnoremap aha :<C-U>silent! normal! vf";<CR>
 nnoremap yat yVat``
 
 "Persist undo
-let undo_dir = $TEMP."\\vimundo"
-if !isdirectory(undo_dir)
-	silent execute "!mkdir ".undo_dir
-endif
-set undodir=$TEMP\vimundo "not sure how to use the variable I made here
+set undodir=~/.vim/vimundo
 set undofile
 set undolevels=5000
 
@@ -326,5 +324,5 @@ function! Sql()
 	endif
 
 	:execute "normal! gg"
-	normal! "*yG
+	normal! "+yG
 endfunction
