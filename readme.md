@@ -11,3 +11,6 @@ Create symlinks
 	As root, run `./install.sh`
 	This will create symlinks for your user as well as root.
 
+	If you don't want to do any root stuff, you can set it up for the user account with
+	`./install-user-only.sh`
+
