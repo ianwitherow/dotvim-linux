@@ -93,7 +93,7 @@ au BufNewFile,BufRead *.aspx,*.ascx,*.master set filetype=html
 au GUIEnter * simalt ~x
 
 "For some reason I have to manually load the css color script
-au Filetype html,css source ~\.vim\after\syntax\css.vim
+au Filetype html,css source ~/.vim/after/syntax/css.vim
 
 "Allows % to move between braces in inline css
 au filetype html let b:match_debug=1
