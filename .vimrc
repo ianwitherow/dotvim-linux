@@ -212,7 +212,7 @@ nnoremap <Leader>fj :%!python -m json.tool<CR>
 nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^$/d<CR>gg=G
 
 "Split up HTML tag and put cursor inside (Used when cursor is like this: <div>|</div>)
-imap <S-Enter> <Enter><Esc>O
+imap <Enter><Enter> <Enter><Esc>O
 
 "HTML attribute text object
 omap aha :normal vaha<CR>
@@ -235,6 +235,10 @@ runtime macros/matchit.vim
 "Ctrl+B opens CtrlP Buffer
 nnoremap <silent> <c-b> :CtrlPBuffer<CR>
 let g:ctrlp_working_path_mode = 'c'
+
+"use tab to trigger emmet
+let g:user_emmet_expandabbr_key='<Tab>'
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
@@ -260,6 +264,21 @@ inoremap <expr>  <C-K>   BDG_GetDigraph()
 
 "NerdTree stuff
 map <F2> :NERDTreeToggle<CR>
+
+
+
+function! FixBrackets()
+" Pulls up brackets that are on their own line
+" javascript
+	silent :g/)$\n{/normal! J
+	silent :g/)$\n\s.\{-}{/normal! J
+
+	silent :g/[a-z]$\n{/normal J
+	silent :g/)$\n{/normal J
+	silent :g/[a-z]$\n\s.{-}{/normal J
+	silent :g/[a-z]$\n^\s\+{/normal J
+	silent :g/)$\n^\s\+{/normal J
+endfunction
 
 function! Sql()
 	call inputsave()
